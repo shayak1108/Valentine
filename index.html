@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Will You Be My Valentine? 💘</title>
+
   <style>
     body {
       margin: 0;
@@ -19,16 +20,17 @@
 
     .container {
       text-align: center;
-      background: rgba(255, 255, 255, 0.85);
-      padding: 40px;
+      background: rgba(255, 255, 255, 0.88);
+      padding: 40px 25px;
       border-radius: 25px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      width: 90%;
       max-width: 600px;
       position: relative;
     }
 
     h1 {
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       color: #ff2e63;
       margin-bottom: 10px;
     }
@@ -36,7 +38,8 @@
     h2 {
       font-size: 1.2rem;
       color: #444;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
+      line-height: 1.5;
     }
 
     .heart {
@@ -50,31 +53,39 @@
       50% { transform: scale(1.2); }
     }
 
+    /* Buttons area */
+    .btn-area {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      position: relative;
+      height: 80px;
+    }
+
     button {
       font-size: 1.2rem;
       padding: 12px 25px;
       border: none;
-      border-radius: 12px;
+      border-radius: 14px;
       cursor: pointer;
-      transition: 0.3s ease;
-      margin: 10px;
+      transition: 0.2s ease;
       font-weight: bold;
+      min-width: 140px;
     }
 
     #yesBtn {
       background: #06d6a0;
       color: white;
       box-shadow: 0 5px 15px rgba(6, 214, 160, 0.4);
-    }
-
-    #yesBtn:hover {
-      transform: scale(1.1);
+      transform: scale(1);
     }
 
     #noBtn {
       background: #ef476f;
       color: white;
       position: absolute;
+      right: 0;
     }
 
     .message {
@@ -83,6 +94,7 @@
       color: #333;
       display: none;
       font-weight: bold;
+      line-height: 1.5;
     }
 
     .sparkle {
@@ -115,7 +127,7 @@
   <div class="container">
     <div class="heart">💘</div>
 
-    <h1>Hey My Gorgeous Valentine. My baby 💖</h1>
+    <h1>Hey My Gorgeous Valentine 💖</h1>
 
     <h2>
       Roses are red 🌹<br>
@@ -126,14 +138,16 @@
 
     <h1>Will you be my Valentine? 🥺👉👈</h1>
 
-    <button id="yesBtn">YESSS 💕</button>
-    <button id="noBtn">No 😤</button>
+    <div class="btn-area" id="btnArea">
+      <button id="yesBtn">YESSS 💕</button>
+      <button id="noBtn">No 😤</button>
+    </div>
 
     <div class="message" id="message">
       OMG SHE SAID YESSSSS 😭❤️<br><br>
       Congratulations babe, you’re stuck with me forever 😌💍<br><br>
       I promise you unlimited love, annoying kisses, and dramatic Bollywood romance 💃🕺<br><br>
-      <span style="font-size: 1.6rem;">I LOVE YOU BEBUUUU❤️</span>
+      <span style="font-size: 1.6rem;">I LOVE YOU ❤️</span>
     </div>
 
     <div class="footer">
@@ -145,20 +159,35 @@
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
     const message = document.getElementById("message");
+    const btnArea = document.getElementById("btnArea");
 
-    // Put NO button in a random place
+    let yesScale = 1;
+
     function moveNoButton() {
-      const container = document.querySelector(".container");
-      const rect = container.getBoundingClientRect();
+      const rect = btnArea.getBoundingClientRect();
 
-      const x = Math.random() * (rect.width - 120);
-      const y = Math.random() * (rect.height - 60);
+      // Keep it inside the button area
+      const x = Math.random() * (rect.width - 140);
+      const y = Math.random() * (rect.height - 50);
 
       noBtn.style.left = x + "px";
       noBtn.style.top = y + "px";
+
+      // YES button grows every time she tries to click NO 😈
+      yesScale += 0.15;
+      yesBtn.style.transform = `scale(${yesScale})`;
     }
 
+    // Desktop hover
     noBtn.addEventListener("mouseover", moveNoButton);
+
+    // Mobile touch
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      moveNoButton();
+    });
+
+    // Also move if clicked
     noBtn.addEventListener("click", moveNoButton);
 
     yesBtn.addEventListener("click", () => {
@@ -186,7 +215,7 @@
       }, 200);
     }
 
-    // Initial NO button placement
+    // Start NO button centered-ish
     moveNoButton();
   </script>
 </body>
