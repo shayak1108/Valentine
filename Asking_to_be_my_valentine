@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Will You Be My Valentine? 💘</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Comic Sans MS", "Poppins", sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 40px;
+      border-radius: 25px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      max-width: 600px;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #ff2e63;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+      color: #444;
+      margin-bottom: 30px;
+    }
+
+    .heart {
+      font-size: 4rem;
+      animation: beat 1s infinite;
+      margin-bottom: 15px;
+    }
+
+    @keyframes beat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    button {
+      font-size: 1.2rem;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      margin: 10px;
+      font-weight: bold;
+    }
+
+    #yesBtn {
+      background: #06d6a0;
+      color: white;
+      box-shadow: 0 5px 15px rgba(6, 214, 160, 0.4);
+    }
+
+    #yesBtn:hover {
+      transform: scale(1.1);
+    }
+
+    #noBtn {
+      background: #ef476f;
+      color: white;
+      position: absolute;
+    }
+
+    .message {
+      margin-top: 25px;
+      font-size: 1.3rem;
+      color: #333;
+      display: none;
+      font-weight: bold;
+    }
+
+    .sparkle {
+      position: absolute;
+      font-size: 20px;
+      animation: floatUp 3s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-800px);
+        opacity: 0;
+      }
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="heart">💘</div>
+
+    <h1>Hey My Gorgeous Valentine 💖</h1>
+
+    <h2>
+      Roses are red 🌹<br>
+      Violets are blue 💙<br>
+      My heart is a mess 😭<br>
+      Because it belongs to you 😌
+    </h2>
+
+    <h1>Will you be my Valentine? 🥺👉👈</h1>
+
+    <button id="yesBtn">YESSS 💕</button>
+    <button id="noBtn">No 😤</button>
+
+    <div class="message" id="message">
+      OMG SHE SAID YESSSSS 😭❤️<br><br>
+      Congratulations babe, you’re stuck with me forever 😌💍<br><br>
+      I promise you unlimited love, annoying kisses, and dramatic Bollywood romance 💃🕺<br><br>
+      <span style="font-size: 1.6rem;">I LOVE YOU ❤️</span>
+    </div>
+
+    <div class="footer">
+      Made with love, panic, and 0% shame 😌
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const message = document.getElementById("message");
+
+    // Put NO button in a random place
+    function moveNoButton() {
+      const container = document.querySelector(".container");
+      const rect = container.getBoundingClientRect();
+
+      const x = Math.random() * (rect.width - 120);
+      const y = Math.random() * (rect.height - 60);
+
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
+
+    noBtn.addEventListener("mouseover", moveNoButton);
+    noBtn.addEventListener("click", moveNoButton);
+
+    yesBtn.addEventListener("click", () => {
+      message.style.display = "block";
+      yesBtn.style.display = "none";
+      noBtn.style.display = "none";
+      startSparkles();
+    });
+
+    function startSparkles() {
+      const emojis = ["❤️", "💖", "💘", "😍", "😘", "🌹", "✨", "💍"];
+
+      setInterval(() => {
+        const sparkle = document.createElement("div");
+        sparkle.classList.add("sparkle");
+        sparkle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+
+        sparkle.style.left = Math.random() * window.innerWidth + "px";
+        sparkle.style.top = window.innerHeight + "px";
+        sparkle.style.fontSize = (Math.random() * 25 + 15) + "px";
+
+        document.body.appendChild(sparkle);
+
+        setTimeout(() => sparkle.remove(), 3000);
+      }, 200);
+    }
+
+    // Initial NO button placement
+    moveNoButton();
+  </script>
+</body>
+</html>
