@@ -55,12 +55,13 @@
 
     /* Buttons area */
     .btn-area {
-      margin-top: 20px;
+      margin-top: 25px;
       display: flex;
-      justify-content: center;
-      gap: 20px;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
       position: relative;
-      height: 80px;
+      height: 200px; /* bigger so NO can run away without overlapping */
     }
 
     button {
@@ -71,7 +72,7 @@
       cursor: pointer;
       transition: 0.2s ease;
       font-weight: bold;
-      min-width: 140px;
+      min-width: 180px;
     }
 
     #yesBtn {
@@ -79,13 +80,17 @@
       color: white;
       box-shadow: 0 5px 15px rgba(6, 214, 160, 0.4);
       transform: scale(1);
+      z-index: 2;
     }
 
     #noBtn {
       background: #ef476f;
       color: white;
       position: absolute;
-      right: 0;
+      top: 120px; /* default below YES */
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
     }
 
     .message {
@@ -166,14 +171,18 @@
     function moveNoButton() {
       const rect = btnArea.getBoundingClientRect();
 
-      // Keep it inside the button area
-      const x = Math.random() * (rect.width - 140);
-      const y = Math.random() * (rect.height - 50);
+      // Keep NO button inside the area
+      const maxX = rect.width - noBtn.offsetWidth;
+      const maxY = rect.height - noBtn.offsetHeight;
+
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
 
       noBtn.style.left = x + "px";
       noBtn.style.top = y + "px";
+      noBtn.style.transform = "none";
 
-      // YES button grows every time she tries to click NO 😈
+      // YES grows each time NO escapes 😈
       yesScale += 0.15;
       yesBtn.style.transform = `scale(${yesScale})`;
     }
@@ -187,7 +196,7 @@
       moveNoButton();
     });
 
-    // Also move if clicked
+    // If clicked somehow
     noBtn.addEventListener("click", moveNoButton);
 
     yesBtn.addEventListener("click", () => {
@@ -215,8 +224,9 @@
       }, 200);
     }
 
-    // Start NO button centered-ish
-    moveNoButton();
+    // Start NO below YES
+    noBtn.style.left = "50%";
+    noBtn.style.top = "120px";
   </script>
 </body>
 </html>
